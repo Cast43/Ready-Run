@@ -46,6 +46,10 @@ public class PlayerMovement : MonoBehaviour
     {
         MoveChar();
         ApplyLinDrag();
+
+        //Animation Variables
+        anim.SetInteger("Velocity",(int)horiz_move);
+
     }
 
     private void MoveChar()
