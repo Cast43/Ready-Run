@@ -67,6 +67,9 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 
             coyote_time_count = 0f;
+            //Animation Variables
+            anim.SetTrigger("Jump");
+
         }
     }
 
@@ -101,13 +104,13 @@ public class PlayerMovement : MonoBehaviour
         ApplyLinDrag();
 
         //Animation Variables
-        anim.SetInteger("Velocity",(int)horiz_move);
+        anim.SetInteger("Velocity", (int)horiz_move);
 
     }
 
     private Vector2 GetInput()
     {
-        return new Vector2 (Input.GetAxisRaw("Horizontal") , Input.GetAxisRaw("Vertical"));
+        return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
 
     private bool IsGrounded()
@@ -134,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyLinDrag()
     {
-        if((Mathf.Abs(horiz_move) < 0.1f || changing_dir) && is_jumping == false && IsGrounded())
+        if ((Mathf.Abs(horiz_move) < 0.1f || changing_dir) && is_jumping == false && IsGrounded())
         {
             rb.drag = linear_drag;
         }
