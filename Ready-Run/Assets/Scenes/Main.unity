@@ -300,6 +300,9 @@ MonoBehaviour:
   jump_power: 6
   coyote_time: 0.2
   jump_buffer_time: 0.2
+  slide_power: 24
+  slide_time: 0.2
+  slide_cooldown: 1
 --- !u!50 &301943315
 Rigidbody2D:
   serializedVersion: 4
@@ -445,7 +448,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979119950}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

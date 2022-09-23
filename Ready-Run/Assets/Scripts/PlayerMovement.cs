@@ -6,9 +6,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public LayerMask ground_layer;
-    Rigidbody2D rb;
-    Animator anim;
-    SpriteRenderer sprite;
+    public Rigidbody2D rb;
+    public Animator anim;
+    public SpriteRenderer sprite;
+    public CapsuleCollider2D hitbox;
 
     [Header("Movement")]
     [SerializeField] private float accel;
@@ -27,6 +28,12 @@ public class PlayerMovement : MonoBehaviour
     private float coyote_time_count;
     private float jump_buffer_counter;
 
+    [Header("Slide")]
+    [SerializeField] private float slide_power;
+    [SerializeField] private float slide_time = 0.2f;
+    [SerializeField] private float slide_cooldown = 1f;
+    private bool can_slide = true;
+    private bool is_sliding;
 
 
 
@@ -35,19 +42,39 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        hitbox = GetComponent<CapsuleCollider2D>();
     }
 
     private void Update()
     {
+        if (is_sliding)
+        {
+            return;
+        }
+
+        //Flip char
         Flip();
 
+        //Get direction
         horiz_move = GetInput().x;
         vert_move = GetInput().y;
 
+        //Jump control
         CoyoteControl();
         BufferControl();
         JumpControl();
 
+        //Slide control
+        SlideInput();
+
+    }
+
+    private void SlideInput()
+    {
+        if (Input.GetButtonDown("Slide") && can_slide && Mathf.Abs(horiz_move) > 0f && IsGrounded())
+        {
+            StartCoroutine(Slide());
+        }
     }
 
     private void JumpControl()
@@ -100,6 +127,11 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (is_sliding)
+        {
+            return;
+        }
+
         MoveChar();
         ApplyLinDrag();
 
@@ -123,6 +155,27 @@ public class PlayerMovement : MonoBehaviour
         is_jumping = true;
         yield return new WaitForSeconds(0.4f);
         is_jumping = false;
+    }
+    private IEnumerator Slide()
+    {
+        can_slide = false;
+        is_sliding = true;
+
+        float grav = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * slide_power, 0f);
+
+        hitbox.size = new Vector2(hitbox.size.x, 0.2813561f);
+        hitbox.offset = new Vector2(hitbox.offset.x, -0.3264888f);
+
+        yield return new WaitForSeconds(slide_time);
+        hitbox.size = new Vector2(hitbox.size.x, 0.9004961f);
+        hitbox.offset = new Vector2(hitbox.offset.x, -0.04975197f);
+        rb.gravityScale = grav;
+        is_sliding = false;
+
+        yield return new WaitForSeconds(slide_cooldown);
+        can_slide = true;
     }
 
     private void MoveChar()
