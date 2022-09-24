@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class MenuController : MonoBehaviour
@@ -16,10 +17,12 @@ public class MenuController : MonoBehaviour
     };
     private TextMeshPro[] text_select;
     private Color marelin_legal = new Color(0.9716981f, 0.7697805f, 0.2154236f);
+    private LoaderScript loader;
     void Start()
     {
         selector = GameObject.Find("SelectorParent");
         text_select = GameObject.Find("Select").GetComponentsInChildren<TextMeshPro>();
+        loader = GameObject.Find("Loader").GetComponent<LoaderScript>();
 
         selector.transform.position = select_pos[pos];
         text_select[pos].color = marelin_legal;
@@ -57,20 +60,19 @@ public class MenuController : MonoBehaviour
         switch (pos)
         {
             case 0:
-                //Level select
+                loader.LoadScene("Main");
                 break;
             case 1:
-                //How to play screen
+                loader.LoadScene("HTP");
                 break;
             case 2:
-                //Options Menus
+                loader.LoadScene("Options");
                 break;
             case 3:
                 Application.Quit();
                 break;
         }
     }
-
     private void SelectSwitch()
     {
         switch (pos)
