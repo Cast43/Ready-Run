@@ -16,7 +16,8 @@ public class MenuController : MonoBehaviour
         new Vector3(-1.134f, -3.332f, 0f),
     };
     private TextMeshPro[] text_select;
-    private Color marelin_legal = new Color(0.9716981f, 0.7697805f, 0.2154236f);
+    private Color cor_text = new Color(0.2431373f, 0.4117647f, 0.345098f);
+    private Color cor_text_normal = new Color(0.8901961f, 0.8117647f, 0.7058824f);  
     private LoaderScript loader;
     void Start()
     {
@@ -25,7 +26,7 @@ public class MenuController : MonoBehaviour
         loader = GameObject.Find("Loader").GetComponent<LoaderScript>();
 
         selector.transform.position = select_pos[pos];
-        text_select[pos].color = marelin_legal;
+        text_select[pos].color = cor_text;
     }
 
     // Update is called once per frame
@@ -79,32 +80,32 @@ public class MenuController : MonoBehaviour
         {
             case 0:
                 selector.transform.position = select_pos[pos];
-                TurnAllWhite();
-                text_select[pos].color = marelin_legal;
+                TurnAllNormal();
+                text_select[pos].color = cor_text;
                 break;
             case 1:
                 selector.transform.position = select_pos[pos];
-                TurnAllWhite();
-                text_select[pos].color = marelin_legal;
+                TurnAllNormal();
+                text_select[pos].color = cor_text;
                 break;
             case 2:
                 selector.transform.position = select_pos[pos];
-                TurnAllWhite();
-                text_select[pos].color = marelin_legal;
+                TurnAllNormal();
+                text_select[pos].color = cor_text;
                 break;
             case 3:
                 selector.transform.position = select_pos[pos];
-                TurnAllWhite();
-                text_select[pos].color = marelin_legal;
+                TurnAllNormal();
+                text_select[pos].color = cor_text;
                 break;
         }
     }
 
-    private void TurnAllWhite()
+    private void TurnAllNormal()
     {
         for (int i = 0; i < text_select.Length; i++)
         {
-            text_select[i].color = Color.white;
+            text_select[i].color = cor_text_normal;
         }
     }
 }
