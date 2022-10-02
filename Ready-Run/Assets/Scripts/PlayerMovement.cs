@@ -79,8 +79,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void JumpControl()
     {
+
         if (coyote_time_count > 0f && jump_buffer_counter > 0f && is_jumping == false)
         {
+            anim.SetTrigger("Jump");
             rb.velocity = new Vector2(rb.velocity.x, jump_power);
 
             jump_buffer_counter = 0f;
@@ -95,7 +97,6 @@ public class PlayerMovement : MonoBehaviour
 
             coyote_time_count = 0f;
             //Animation Variables
-            anim.SetTrigger("Jump");
 
         }
     }
@@ -136,7 +137,8 @@ public class PlayerMovement : MonoBehaviour
         ApplyLinDrag();
 
         //Animation Variables
-        anim.SetInteger("Velocity", (int)horiz_move);
+        anim.SetInteger("VelocityX", (int)horiz_move);
+        anim.SetInteger("VelocityY",(int)rb.velocity.y);
 
     }
 
@@ -167,11 +169,17 @@ public class PlayerMovement : MonoBehaviour
 
         hitbox.size = new Vector2(hitbox.size.x, 0.2813561f);
         hitbox.offset = new Vector2(hitbox.offset.x, -0.3264888f);
+        //Animation Variables
+        anim.Play("Slide");
 
         yield return new WaitForSeconds(slide_time);
+
         hitbox.size = new Vector2(hitbox.size.x, 0.9004961f);
         hitbox.offset = new Vector2(hitbox.offset.x, -0.04975197f);
         rb.gravityScale = grav;
+        //Animation Variables
+        anim.SetBool("Slide", false);
+
         is_sliding = false;
 
         yield return new WaitForSeconds(slide_cooldown);
