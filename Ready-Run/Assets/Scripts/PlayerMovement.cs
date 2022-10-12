@@ -82,12 +82,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (coyote_time_count > 0f && jump_buffer_counter > 0f && is_jumping == false)
         {
-            anim.SetTrigger("Jump");
+
+            //Animation Variables
+            anim.SetBool("Jump", true);
+
             rb.velocity = new Vector2(rb.velocity.x, jump_power);
 
             jump_buffer_counter = 0f;
 
             StartCoroutine(JumpCooldown());
+
         }
 
 
@@ -96,7 +100,6 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 
             coyote_time_count = 0f;
-            //Animation Variables
 
         }
     }
@@ -138,7 +141,15 @@ public class PlayerMovement : MonoBehaviour
 
         //Animation Variables
         anim.SetInteger("VelocityX", (int)horiz_move);
-        anim.SetInteger("VelocityY",(int)rb.velocity.y);
+        anim.SetInteger("VelocityY", (int)rb.velocity.y);
+        if (IsGrounded())
+        {
+            anim.SetBool("NotGrounded", false);
+        }
+        else
+        {
+            anim.SetBool("NotGrounded", true);
+        }
 
     }
 
@@ -157,7 +168,11 @@ public class PlayerMovement : MonoBehaviour
         is_jumping = true;
         yield return new WaitForSeconds(0.4f);
         is_jumping = false;
+        anim.SetBool("Jump", false);
+
+
     }
+
     private IEnumerator Slide()
     {
         can_slide = false;
@@ -170,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
         hitbox.size = new Vector2(hitbox.size.x, 0.2813561f);
         hitbox.offset = new Vector2(hitbox.offset.x, -0.3264888f);
         //Animation Variables
-        anim.Play("Slide");
+        anim.SetBool("Slide", true);
 
         yield return new WaitForSeconds(slide_time);
 
