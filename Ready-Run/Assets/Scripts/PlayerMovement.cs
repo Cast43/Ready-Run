@@ -40,8 +40,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        sprite = GetComponent<SpriteRenderer>();
+        anim = GetComponentInChildren<Animator>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
         hitbox = GetComponent<CapsuleCollider2D>();
     }
 
@@ -182,15 +182,15 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(transform.localScale.x * slide_power, 0f);
 
-        hitbox.size = new Vector2(hitbox.size.x, 0.2813561f);
-        hitbox.offset = new Vector2(hitbox.offset.x, -0.3264888f);
+        //hitbox.size = new Vector2(hitbox.size.x, 0.2813561f);
+        //hitbox.offset = new Vector2(hitbox.offset.x, -0.3264888f);
         //Animation Variables
         anim.SetBool("Slide", true);
 
         yield return new WaitForSeconds(slide_time);
 
-        hitbox.size = new Vector2(hitbox.size.x, 0.9004961f);
-        hitbox.offset = new Vector2(hitbox.offset.x, -0.04975197f);
+        //hitbox.size = new Vector2(hitbox.size.x, 0.9004961f);
+        //hitbox.offset = new Vector2(hitbox.offset.x, -0.04975197f);
         rb.gravityScale = grav;
         //Animation Variables
         anim.SetBool("Slide", false);
