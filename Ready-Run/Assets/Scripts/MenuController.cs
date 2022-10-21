@@ -16,8 +16,8 @@ public class MenuController : MonoBehaviour
         new Vector3(-1.134f, -3.332f, 0f),
     };
     private TextMeshPro[] text_select;
-    private Color cor_text = new Color(0.2431373f, 0.4117647f, 0.345098f);
-    private Color cor_text_normal = new Color(0.8901961f, 0.8117647f, 0.7058824f);  
+    private Color cor_text = new Color(1f, 0.9215686f, 0.3411765f);
+    private Color cor_text_normal = new Color(1f, 1f, 1f);  
     private LoaderScript loader;
     void Start()
     {
