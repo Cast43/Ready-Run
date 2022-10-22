@@ -362,9 +362,13 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.drag = linear_drag;
         }
-        else if (is_sliding && !is_on_slope)
+        else if (is_sliding && !is_on_slope && IsGrounded())
         {
             StartCoroutine(LinDragSlide());
+        }
+        else if(is_sliding && !IsGrounded())
+        {
+            rb.drag = 1f;
         }
         else
         {
