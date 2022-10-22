@@ -17,9 +17,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float ground_check_dist;
     [SerializeField] private PhysicsMaterial2D no_fric;
     [SerializeField] private PhysicsMaterial2D fric;
+    [SerializeField] private PhysicsMaterial2D semi_fric;
     private Vector2 perp;
     private float slope_ang;
-    private bool is_on_slope;
+    [SerializeField] private bool is_on_slope;
     [SerializeField] private bool just_entered_slope;
 
 
@@ -43,15 +44,17 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Dash")]
     [SerializeField] private float dash_power;
+    [SerializeField] private float max_speed_dash = 10f;
     [SerializeField] private float dash_time = 0.2f;
     [SerializeField] private float dash_cooldown = 1f;
-    private bool can_dash = true;
-    private bool is_dashing;
+    [SerializeField] private bool can_dash = true;
+    [SerializeField] private bool is_dashing;
 
     [Header("Slide")]
     [SerializeField] private bool is_sliding;
     [SerializeField] private float linear_drag_slide;
     [SerializeField] private float max_speed_slide;
+    [SerializeField] private float accel_slide;
     private float old_lin_drag_slide;
 
 
@@ -110,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SlideInput()
     {
-        if (Input.GetButtonDown("Slide") && Mathf.Abs(horiz_move) > 0f && IsGrounded())
+        if (Input.GetButtonDown("Slide") && (IsGrounded() || is_on_slope))
         {
             is_sliding = true;
         }
@@ -124,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void DashInput()
     {
-        if (Input.GetButtonDown("Dash") && can_dash && Mathf.Abs(horiz_move) > 0f)
+        if (Input.GetButtonDown("Dash") && can_dash && Mathf.Abs(horiz_move) > 0f && !is_on_slope && !is_sliding)
         {
             StartCoroutine(Dash());
         }
@@ -132,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void JumpControl()
     {
-        if (coyote_time_count > 0f && jump_buffer_counter > 0f && is_jumping == false)
+        if (coyote_time_count > 0f && jump_buffer_counter > 0f && is_jumping == false && !is_sliding)
         {
 
             //Animation Variables
@@ -212,12 +215,25 @@ public class PlayerMovement : MonoBehaviour
 
             slope_ang = Vector2.Angle(hit.normal, Vector2.up);
             is_on_slope = slope_ang != 0;
-            Debug.DrawRay(hit.point, Vector2.down, Color.red);
+            Debug.DrawRay(hit.point, perp, Color.red);
         }
 
-        if (is_on_slope && horiz_move == 0)
+        if (!IsGrounded())
+        {
+            is_on_slope = false;
+        }
+
+        if (!is_sliding && is_on_slope && horiz_move == 0 && (transform.localScale.x > 0f || transform.localScale.x < 0f))
         {
             rb.sharedMaterial = fric;
+        }
+        else if (is_sliding && is_on_slope && horiz_move < 0)
+        {
+            rb.sharedMaterial = semi_fric;
+        }
+        else if (!is_sliding && (horiz_move < 0 || horiz_move > 0))
+        {
+            rb.sharedMaterial = no_fric;
         }
         else
         {
@@ -272,14 +288,37 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (is_on_slope && !jump_ground && !is_jumping && is_sliding)
+        if (is_on_slope && !jump_ground && !is_jumping && is_sliding && transform.localScale.x > 0f)
         {
             StartCoroutine(JESCont());
             if (just_entered_slope)
             {
                 rb.velocity = new Vector2(-horiz_move * perp.x * max_speed, -horiz_move * perp.y * max_speed);
             }
-            rb.AddForce(new Vector2(-horiz_move * perp.x * accel, -horiz_move * perp.y * accel));
+            if(horiz_move != 0)
+            {
+                rb.AddForce(new Vector2(-horiz_move * perp.x * accel_slide, -horiz_move * perp.y * accel_slide));
+            }
+            else
+            {
+                rb.AddForce(new Vector2(2 * perp.x * -accel_slide,2 * perp.y * -accel_slide));
+            }
+
+            if (Mathf.Abs(rb.velocity.x) > max_speed_slide)
+            {
+                rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * max_speed_slide, rb.velocity.y);
+            }
+        }
+        else if (is_on_slope && !jump_ground && !is_jumping && is_sliding && transform.localScale.x < 0f)
+        {
+            StartCoroutine(JESCont());
+            if (just_entered_slope)
+            {
+                rb.velocity = new Vector2(-horiz_move * perp.x * max_speed, -horiz_move * perp.y * max_speed);
+            }
+
+            rb.AddForce(new Vector2(horiz_move * perp.x * accel_slide, horiz_move * perp.y * accel_slide));
+
             if (Mathf.Abs(rb.velocity.x) > max_speed_slide)
             {
                 rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * max_speed_slide, rb.velocity.y);
@@ -301,9 +340,13 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             rb.AddForce(new Vector2(horiz_move, 0f) * accel);
-            if (Mathf.Abs(rb.velocity.x) > max_speed)
+            if (Mathf.Abs(rb.velocity.x) > max_speed && !is_dashing)
             {
                 rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * max_speed, rb.velocity.y);
+            }
+            else if(is_dashing)
+            {
+                rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * max_speed_dash, rb.velocity.y);
             }
         }
 
@@ -323,10 +366,6 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(LinDragSlide());
         }
-        else if(is_sliding && is_on_slope)
-        {
-            rb.drag = 1f;
-        }
         else
         {
             rb.drag = 1f;
@@ -342,6 +381,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void Flip()
     {
+
+        if (is_on_slope && IsGrounded())
+        {
+            sprite.transform.eulerAngles = Vector3.forward * -slope_ang;
+        }
+        else
+        {
+            sprite.transform.eulerAngles = Vector3.zero;
+        }
+
         if (horiz_move > 0f)
         {
             transform.localScale = new Vector3(1f, transform.localScale.y, transform.localScale.z);
