@@ -19,6 +19,8 @@ public class MenuController : MonoBehaviour
     private Color cor_text = new Color(1f, 0.9215686f, 0.3411765f);
     private Color cor_text_normal = new Color(1f, 1f, 1f);  
     private LoaderScript loader;
+    [SerializeField] private bool just_up;
+    [SerializeField] private bool just_down;
     void Start()
     {
         selector = GameObject.Find("SelectorParent");
@@ -39,18 +41,27 @@ public class MenuController : MonoBehaviour
 
     private void SelectControl()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetAxis("VerticalMenu") == -1f && just_up == false)
         {
             pos++;
+            just_down = false;
+            just_up = true;
             SelectSwitch();
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        else if (Input.GetAxis("VerticalMenu") == 1f && just_down == false)
         {
             pos--;
+            just_up = false;
+            just_down = true;
             SelectSwitch();
         }
+        else if(Input.GetAxis("VerticalMenu") == 0f)
+        {
+            just_up = false;
+            just_down = false;
+        }
 
-        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetButtonDown("Submit"))
         {
             DoSelect();
         }
