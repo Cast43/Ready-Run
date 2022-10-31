@@ -101,13 +101,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (is_sliding)
         {
-            if (anim.GetBool("Slide") == false)
-            {
-                anim.SetTrigger("SlidePrep");
-
-            }
             anim.SetBool("Slide", true);
-
         }
         else
         {
@@ -115,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-
+    
 
     private void SlideInput()
     {
@@ -276,11 +270,7 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(transform.localScale.x * dash_power, 0f);
 
-        anim.SetBool("Dash", true);
-
         yield return new WaitForSeconds(dash_time);
-
-        anim.SetBool("Dash", false);
 
         rb.gravityScale = grav;
 
@@ -305,13 +295,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.velocity = new Vector2(-horiz_move * perp.x * max_speed, -horiz_move * perp.y * max_speed);
             }
-            if (horiz_move != 0)
+            if(horiz_move != 0)
             {
                 rb.AddForce(new Vector2(-horiz_move * perp.x * accel_slide, -horiz_move * perp.y * accel_slide));
             }
             else
             {
-                rb.AddForce(new Vector2(2 * perp.x * -accel_slide, 2 * perp.y * -accel_slide));
+                rb.AddForce(new Vector2(2 * perp.x * -accel_slide,2 * perp.y * -accel_slide));
             }
 
             if (Mathf.Abs(rb.velocity.x) > max_speed_slide)
@@ -334,7 +324,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * max_speed_slide, rb.velocity.y);
             }
         }
-        else if (is_on_slope && !jump_ground && !is_jumping)
+        else if(is_on_slope && !jump_ground && !is_jumping)
         {
             StartCoroutine(JESCont());
             if (just_entered_slope)
@@ -354,7 +344,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * max_speed, rb.velocity.y);
             }
-            else if (is_dashing)
+            else if(is_dashing)
             {
                 rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * max_speed_dash, rb.velocity.y);
             }
@@ -376,7 +366,7 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(LinDragSlide());
         }
-        else if (is_sliding && !IsGrounded())
+        else if(is_sliding && !IsGrounded())
         {
             rb.drag = 1f;
         }
