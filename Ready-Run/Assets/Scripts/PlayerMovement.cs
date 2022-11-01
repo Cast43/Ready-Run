@@ -222,6 +222,7 @@ public class PlayerMovement : MonoBehaviour
             slope_ang = Vector2.Angle(hit.normal, Vector2.up);
             is_on_slope = slope_ang != 0;
             Debug.DrawRay(hit.point, perp, Color.red);
+            Debug.Log(slope_ang);
         }
 
         if (!IsGrounded())
