@@ -109,7 +109,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 0
         width: 64
         height: 32
       alignment: 0
@@ -130,7 +130,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 32
+        y: 0
         width: 64
         height: 32
       alignment: 0
@@ -150,7 +150,7 @@ TextureImporter:
       name: CarRed-Sheet_2
       rect:
         serializedVersion: 2
-        x: 0
+        x: 128
         y: 0
         width: 64
         height: 32
@@ -171,7 +171,7 @@ TextureImporter:
       name: CarRed-Sheet_3
       rect:
         serializedVersion: 2
-        x: 64
+        x: 192
         y: 0
         width: 64
         height: 32
