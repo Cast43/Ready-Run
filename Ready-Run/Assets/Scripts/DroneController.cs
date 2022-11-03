@@ -66,7 +66,7 @@ public class DroneController : MonoBehaviour
         {
             going_right = false;
         }
-        else if(transform.position.x < original_pos - fly_distance)
+        else if(transform.position.x < (original_pos - fly_distance))
         {
             going_right = true;
         }
