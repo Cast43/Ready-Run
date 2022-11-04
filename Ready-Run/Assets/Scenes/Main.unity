@@ -642,9 +642,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentmode: 0
   fly_distance: 4
+  shot: {fileID: 6702090630985729979, guid: d205a632bc0dcb944b00d740b60ff980, type: 3}
   vel: 2
   original_pos: 0
   going_right: 0
+  shot_cooldown: 3
 --- !u!61 &363998470
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -669,7 +671,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.6, y: 3}
+  m_Size: {x: 6.439039, y: 4.374517}
   m_EdgeRadius: 0
 --- !u!1001 &400116222
 PrefabInstance:
