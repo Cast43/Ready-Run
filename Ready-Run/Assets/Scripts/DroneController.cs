@@ -7,16 +7,20 @@ public class DroneController : MonoBehaviour
     [SerializeField] private enum Mode { Idle, Hunt, Escape};
     [SerializeField] private Mode currentmode;
     [SerializeField] private float fly_distance;
-    private Rigidbody2D rb;
+    [SerializeField] private GameObject shot;
     [SerializeField] private float vel = 2f;
     [SerializeField] private float original_pos;
     [SerializeField] private bool going_right = true;
+    [SerializeField] private float shot_cooldown = 3f;
+    private Rigidbody2D rb;
     private SpriteRenderer sprite;
+    private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        player = GameObject.Find("Player").gameObject;
         currentmode = Mode.Idle;
         original_pos = transform.position.x;
     }
@@ -49,6 +53,14 @@ public class DroneController : MonoBehaviour
             currentmode = Mode.Hunt;
         }
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.name == "Player")
+        {
+            currentmode = Mode.Escape;
+        }
+    }
     void IdleMove()
     {
         if(going_right)
@@ -73,7 +85,19 @@ public class DroneController : MonoBehaviour
     }
     void HuntMove()
     {
-
+        rb.velocity = (new Vector2(0f, 0f));
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, player.transform.position.x, 0.015f), Mathf.Lerp(transform.position.y, player.transform.position.y + 1f, 0.02f), transform.position.z);
+        Shoot();
+    }
+    
+    void Shoot()
+    {
+        shot_cooldown -= Time.deltaTime;
+        if(shot_cooldown <= 0f)
+        {
+            shot_cooldown = 3f;
+            GameObject shot_instance = Instantiate(shot, transform.position, Quaternion.identity);
+        }
     }
 
     void EscapeMove()
