@@ -9,7 +9,6 @@ public class Car : MonoBehaviour
     Rigidbody2D rig;
     void Start()
     {
-        vel = Random.Range(4, 8);
         rig = transform.GetComponent<Rigidbody2D>();
     }
 
