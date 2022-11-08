@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DroneController : MonoBehaviour
 {
-    [SerializeField] private enum Mode { Idle, Hunt, Escape};
+    [SerializeField] private enum Mode { Idle, Hunt, Escape };
     [SerializeField] private Mode currentmode;
     [SerializeField] private float fly_distance;
     [SerializeField] private GameObject shot;
@@ -15,10 +15,12 @@ public class DroneController : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private GameObject player;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         player = GameObject.Find("Player").gameObject;
         currentmode = Mode.Idle;
@@ -26,7 +28,7 @@ public class DroneController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         CheckMode();
     }
@@ -48,7 +50,7 @@ public class DroneController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.name == "Player")
+        if (collision.name == "Player")
         {
             currentmode = Mode.Hunt;
         }
@@ -63,45 +65,85 @@ public class DroneController : MonoBehaviour
     }
     void IdleMove()
     {
-        if(going_right)
+        if (going_right)
         {
             rb.velocity = (new Vector2(vel, 0f));
-            sprite.flipX = false;
+
         }
         else
         {
             rb.velocity = (new Vector2(-vel, 0f));
-            sprite.flipX = true;
+
+
         }
 
         if (transform.position.x >= (original_pos + fly_distance))
         {
             going_right = false;
+            anim.SetBool("Flip", true);
+
+
         }
-        else if(transform.position.x < (original_pos - fly_distance))
+        else if (transform.position.x < (original_pos - fly_distance))
         {
             going_right = true;
+            anim.SetBool("Flip", true);
+
+
         }
     }
     void HuntMove()
     {
         rb.velocity = (new Vector2(0f, 0f));
-        transform.position = new Vector3(Mathf.Lerp(transform.position.x, player.transform.position.x, 0.015f), Mathf.Lerp(transform.position.y, player.transform.position.y + 1f, 0.02f), transform.position.z);
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, player.transform.position.x, 1f*Time.deltaTime), Mathf.Lerp(transform.position.y, player.transform.position.y + 1f, 1.2f*Time.deltaTime), transform.position.z);
         Shoot();
     }
-    
+
     void Shoot()
     {
         shot_cooldown -= Time.deltaTime;
-        if(shot_cooldown <= 0f)
+
+        // ROTACAO NO TIRO
+        Vector3 distance = transform.position - player.transform.position;
+        float angle = Mathf.Atan2(distance.y, distance.x) * Mathf.Rad2Deg - 180;
+        Quaternion ToRotate = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, ToRotate, 1.2f * Time.deltaTime);
+
+        if (shot_cooldown <= 0f)
         {
+            anim.SetTrigger("Shoot");
             shot_cooldown = 3f;
-            GameObject shot_instance = Instantiate(shot, transform.position, Quaternion.identity);
         }
+    }
+    void InstantiateShoot()
+    {
+        Vector3 distance = transform.position - player.transform.position;
+        float angle = Mathf.Atan2(distance.y, distance.x) * Mathf.Rad2Deg - 180;
+        Quaternion ToRotate = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        GameObject shot_instance = Instantiate(shot, transform.position, ToRotate);
+        Destroy(shot_instance, 5);
+
+
     }
 
     void EscapeMove()
     {
 
     }
+    public IEnumerator FlipAnim()
+    {
+        anim.SetBool("Flip", false);
+
+        yield return new WaitForSeconds(0);
+        if (going_right)
+        {
+            sprite.flipX = false;
+        }
+        else
+        {
+            sprite.flipX = true;
+        }
+    }
+
 }
