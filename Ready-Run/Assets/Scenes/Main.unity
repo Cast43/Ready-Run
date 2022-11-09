@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 301943314}
   - component: {fileID: 301943315}
   - component: {fileID: 301943316}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 314031734}
   - component: {fileID: 314031736}
   - component: {fileID: 314031735}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Sprites
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -917,7 +917,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 437963644}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -9338,7 +9338,7 @@ GameObject:
   - component: {fileID: 979119953}
   - component: {fileID: 979119952}
   - component: {fileID: 979119951}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -26636,10 +26636,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3645243318237956808, guid: 5e67c1d6a7353b44eaf2c39bea4f00a7, type: 3}
-      propertyPath: shot_spawn
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3645243318237956813, guid: 5e67c1d6a7353b44eaf2c39bea4f00a7, type: 3}
       propertyPath: m_Name
       value: Drone
