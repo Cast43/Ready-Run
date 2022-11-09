@@ -7,6 +7,7 @@ public class DroneController : MonoBehaviour
     [SerializeField] private enum Mode { Idle, Hunt, Escape };
     [SerializeField] private Mode currentmode;
     [SerializeField] private float fly_distance;
+    [SerializeField] private Transform shot_spawn;
     [SerializeField] private GameObject shot;
     [SerializeField] private float vel = 2f;
     [SerializeField] private float original_pos;
@@ -22,6 +23,7 @@ public class DroneController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        shot_spawn = GetComponentInChildren<Transform>();
         player = GameObject.Find("Player").gameObject;
         currentmode = Mode.Idle;
         original_pos = transform.position.x;
@@ -121,9 +123,8 @@ public class DroneController : MonoBehaviour
         float angle = Mathf.Atan2(distance.y, distance.x) * Mathf.Rad2Deg - 180;
         Quaternion ToRotate = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        GameObject shot_instance = Instantiate(shot, transform.position, ToRotate);
+        GameObject shot_instance = Instantiate(shot, shot_spawn.position, ToRotate);
         Destroy(shot_instance, 5);
-
 
     }
 
