@@ -17,13 +17,15 @@ public class ShotController : MonoBehaviour
         player_rb = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         rb = GetComponent<Rigidbody2D>();
 
-        target = new Vector2(player.transform.position.x + player_rb.velocity.x/4, player.transform.position.y);
+        target = new Vector2(player.transform.position.x + player_rb.velocity.x / 4, player.transform.position.y);
+
+        Vector2 distance = target - rb.position;
+        rb.velocity = distance.normalized * speed;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector2 newPosition = Vector2.MoveTowards(transform.position, target, Time.fixedDeltaTime * speed);
-        rb.MovePosition(newPosition);
+
     }
 }
