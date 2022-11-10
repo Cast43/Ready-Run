@@ -23,7 +23,7 @@ public class DroneController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
-        shot_spawn = GetComponentInChildren<Transform>();
+        shot_spawn = GetComponentsInChildren<Transform>()[1];
         player = GameObject.Find("Player").gameObject;
         currentmode = Mode.Idle;
         original_pos = transform.position.x;

@@ -8,7 +8,6 @@ public class ShotController : MonoBehaviour
     public Rigidbody2D player_rb;
     public Rigidbody2D rb;
     public Vector2 target;
-    public Transform point_pos;
     public float speed;
     public float detect_dist;
     void Start()
@@ -16,7 +15,6 @@ public class ShotController : MonoBehaviour
         player = GameObject.Find("Player");
         player_rb = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         rb = GetComponent<Rigidbody2D>();
-        point_pos = GetComponentInChildren<Transform>();
 
         target = new Vector2(player.transform.position.x + player_rb.velocity.x / 4, player.transform.position.y);
 
@@ -24,17 +22,17 @@ public class ShotController : MonoBehaviour
         rb.velocity = distance.normalized * speed;
     }
 
-    private void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        RaycastHit2D hit = Physics2D.Raycast(point_pos.position, rb.position - target, detect_dist);
-        if (hit.transform.tag == "Player")
+        if(collision.name == "Player")
         {
-            Debug.Log("Poggers");
+            Debug.Log("Pog");
+            Destroy(gameObject);
         }
-        else
+
+        if (collision.tag == "Ground")
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject, 0.05f);
         }
     }
-
 }
