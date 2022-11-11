@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Slide")]
     [SerializeField] private bool is_sliding;
+    [SerializeField] private bool holding_ctrl;
     [SerializeField] private float linear_drag_slide;
     [SerializeField] private float max_speed_slide;
     [SerializeField] private float accel_slide;
@@ -119,14 +120,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void SlideInput()
     {
-        if (Input.GetButtonDown("Slide") && (IsGrounded() || is_on_slope))
+        if (Input.GetButton("Slide") && (IsGrounded() || is_on_slope))
         {
             is_sliding = true;
+        }
+        if (Input.GetButton("Slide"))
+        {
+            holding_ctrl = true;
         }
 
         if (Input.GetButtonUp("Slide"))
         {
             is_sliding = false;
+            holding_ctrl = false;
             linear_drag_slide = old_lin_drag_slide;
         }
     }
@@ -298,6 +304,10 @@ public class PlayerMovement : MonoBehaviour
             just_entered_slope = true;
         }
 
+        if(holding_ctrl && IsGrounded())
+        {
+            is_sliding = true;
+        }
 
         if (is_on_slope && !jump_ground && !is_jumping && is_sliding && transform.localScale.x > 0f)
         {
@@ -391,7 +401,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.drag = linear_drag_slide;
         yield return new WaitForSeconds(0.1f);
-        linear_drag_slide += 0.5f;
+        linear_drag_slide += 0.2f;
     }
 
     private void Flip()

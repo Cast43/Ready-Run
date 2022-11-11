@@ -90,8 +90,6 @@ public class DroneController : MonoBehaviour
         {
             going_right = true;
             anim.SetBool("Flip", true);
-
-
         }
     }
     void HuntMove()
