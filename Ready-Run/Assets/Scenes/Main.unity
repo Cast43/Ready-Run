@@ -537,10 +537,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6307008076132553335, guid: 18eba50d188a9d848af466494d19ca2d, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18eba50d188a9d848af466494d19ca2d, type: 3}
 --- !u!1 &314031733
@@ -1139,7 +1135,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 80
-      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf00000000000000000000803f0000803f0000803f00000000000000000000803f00000000
+      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf000000000000000000000000000000000000000000000000000000000000000000000000
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
@@ -1155,6 +1151,7 @@ Sprite:
   m_PhysicsShape: []
   m_Bones: []
   m_SpriteID: 
+<<<<<<< HEAD
 --- !u!224 &482101342 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6307008076132553330, guid: 18eba50d188a9d848af466494d19ca2d, type: 3}
@@ -1162,6 +1159,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of cf077b4 (Timer)
 --- !u!1 &511922896
 GameObject:
   m_ObjectHideFlags: 0
@@ -26388,6 +26387,7 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 3
   m_ColliderType: 1
+<<<<<<< HEAD
 --- !u!1 &2055069049
 GameObject:
   m_ObjectHideFlags: 0
@@ -26539,6 +26539,8 @@ CanvasRenderer:
   m_CullTransparentMesh: 1
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of cf077b4 (Timer)
 --- !u!213 &2077056241
 Sprite:
   m_ObjectHideFlags: 0
@@ -26733,7 +26735,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 80
-      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf00000000000000000000803f0000803f0000803f00000000000000000000803f00000000
+      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf000000000000000000000000000000000000000000000000000000000000000000000000
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
