@@ -404,7 +404,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: 9}
+        - {x: 16, y: 9}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
       spriteID: 51eeeaad2ea0d3f44b1344bcec766b50
@@ -425,7 +429,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: 9}
+        - {x: 16, y: 9}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
       spriteID: bf772c5896d94b146a73aaa326ce9fef
@@ -446,7 +454,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: 9}
+        - {x: 16, y: 9}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
       spriteID: 4f9239a6b92df6c4085c5fdef724a8c7
@@ -467,7 +479,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: 9}
+        - {x: 16, y: 9}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
       spriteID: 4d617cab6207dc0428508124b6cc11d2
@@ -488,7 +504,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: 9}
+        - {x: 16, y: 9}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
       spriteID: d0bc2aadcafc4b84b94601a788d49cc9
@@ -509,7 +529,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: 16}
+        - {x: -16, y: 9}
+        - {x: 16, y: 9}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
       spriteID: 780612d6c2cb0cb4fa3313645bc843f0
