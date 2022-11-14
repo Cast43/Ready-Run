@@ -7,6 +7,10 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("General")]
     public LayerMask ground_layer;
+    public bool is_paused = false;
+    public GameObject menu_pause;
+    public Vector3 vel_men;
+    public float t;
     public Rigidbody2D rb;
     public Animator anim;
     public SpriteRenderer sprite;
@@ -67,11 +71,27 @@ public class PlayerMovement : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
         hitbox = GetComponent<CapsuleCollider2D>();
         old_lin_drag_slide = linear_drag_slide;
+        menu_pause = GameObject.Find("Loader/Fade/PauseMenu");  
     }
 
     private void Update()
     {
-        if (is_dashing)
+
+        //Controla o pause
+        PauseControl();
+
+        if (is_paused)
+        {
+            Time.timeScale = Mathf.Lerp(Time.timeScale, 0f, 0.025f);
+            MenuGoUp();
+        }
+        else
+        {
+            Time.timeScale = Mathf.Lerp(Time.timeScale, 1f, 0.025f);
+            MenuGoDown();
+        }
+
+        if (is_dashing || is_paused)
         {
             return;
         }
@@ -98,6 +118,25 @@ public class PlayerMovement : MonoBehaviour
         //Controlar descidas anguladas
         SlopeCheck();
     }
+
+    private void PauseControl()
+    {
+        if (Input.GetButtonDown("Pause"))
+        {
+            is_paused = !is_paused;
+        }
+    }
+
+    private void MenuGoUp()
+    {
+        menu_pause.transform.position = Vector3.Lerp(menu_pause.transform.position, Vector3.zero, 0.05f);
+    }
+
+    private void MenuGoDown()
+    {
+        menu_pause.transform.position = Vector3.Lerp(menu_pause.transform.position, new Vector3(0f, -900f, 0f), 0.05f);
+    }
+
     private void SlideControl()
     {
         if (is_sliding)
