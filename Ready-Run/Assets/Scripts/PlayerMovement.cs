@@ -62,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float accel_slide;
     private float old_lin_drag_slide;
 
+    [Header("Stun")]
+    [SerializeField] private bool stunned;
+    [SerializeField] private float timeStun;
+
+
 
 
     void Start()
@@ -71,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
         hitbox = GetComponent<CapsuleCollider2D>();
         old_lin_drag_slide = linear_drag_slide;
-        menu_pause = GameObject.Find("Loader/Fade/PauseMenu");  
+        menu_pause = GameObject.Find("Loader/Fade/PauseMenu");
     }
 
     private void Update()
@@ -100,8 +105,15 @@ public class PlayerMovement : MonoBehaviour
         Flip();
 
         //Get direction
-        horiz_move = GetInput().x;
-        vert_move = GetInput().y;
+        if (!stunned)
+        {
+            horiz_move = GetInput().x;
+            vert_move = GetInput().y;
+        }
+        else
+        {
+            horiz_move = 0;
+        }
 
         //Jump control
         CoyoteControl();
@@ -267,7 +279,7 @@ public class PlayerMovement : MonoBehaviour
             slope_ang = Vector2.Angle(hit.normal, Vector2.up);
             is_on_slope = slope_ang != 0;
             Debug.DrawRay(hit.point, perp, Color.red);
-            Debug.DrawRay(hit.point, rb.velocity/4, Color.green);
+            Debug.DrawRay(hit.point, rb.velocity / 4, Color.green);
         }
 
         if (!IsGrounded())
@@ -343,7 +355,7 @@ public class PlayerMovement : MonoBehaviour
             just_entered_slope = true;
         }
 
-        if(holding_ctrl && IsGrounded())
+        if (holding_ctrl && IsGrounded())
         {
             is_sliding = true;
         }
@@ -463,6 +475,20 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(-1f, transform.localScale.y, transform.localScale.z);
         }
+    }
+    public IEnumerator Stun()
+    {
+        stunned = true;
+        anim.SetBool("Stun",true);
+        sprite.color = Color.red;
+        yield return new WaitForSeconds(timeStun);
+        stunned = false;
+        anim.SetBool("Stun",false);
+        sprite.color = Color.white;
+
+
+
+
     }
 }
 

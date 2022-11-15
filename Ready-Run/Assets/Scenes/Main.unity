@@ -387,7 +387,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 301943310}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.8, y: -1.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -446,6 +446,8 @@ MonoBehaviour:
   linear_drag_slide: 4
   max_speed_slide: 12
   accel_slide: 30
+  stunned: 0
+  timeStun: 2
 --- !u!50 &301943315
 Rigidbody2D:
   serializedVersion: 4
@@ -27108,7 +27110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3645243318237956813, guid: 5e67c1d6a7353b44eaf2c39bea4f00a7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3645243318237956815, guid: 5e67c1d6a7353b44eaf2c39bea4f00a7, type: 3}
       propertyPath: m_RootOrder

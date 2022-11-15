@@ -27,6 +27,7 @@ public class ShotController : MonoBehaviour
         if(collision.name == "Player")
         {
             Debug.Log("Pog");
+            collision.GetComponent<PlayerMovement>().StartCoroutine("Stun");
             Destroy(gameObject);
         }
 
