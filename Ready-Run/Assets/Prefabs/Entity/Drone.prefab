@@ -129,8 +129,7 @@ MonoBehaviour:
   vel: 3
   original_pos: 0
   going_right: 0
-  shot_cooldown: 3
-  colide_area: {fileID: 3349852510512042825}
+  shot_cooldown: 2.5
 --- !u!50 &3645243318237956809
 Rigidbody2D:
   serializedVersion: 4
