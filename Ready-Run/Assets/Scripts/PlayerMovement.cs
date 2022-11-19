@@ -436,7 +436,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (is_sliding && !is_on_slope && IsGrounded())
         {
-            StartCoroutine(LinDragSlide());
+             StartCoroutine(LinDragSlide());
         }
         else if (is_sliding && !IsGrounded())
         {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour
 {
@@ -12,39 +13,44 @@ public class PauseMenuController : MonoBehaviour
     private LoaderScript loader;
     [SerializeField] private bool just_up;
     [SerializeField] private bool just_down;
+    [SerializeField] private PlayerMovement pc;
     // Start is called before the first frame update
     void Start()
     {
         texts = GetComponentsInChildren<TextMeshProUGUI>();
         loader = GameObject.Find("Loader").GetComponent<LoaderScript>();
+        pc = GameObject.Find("Player").GetComponent<PlayerMovement>();
 
         texts[pos].color = cor_text;
     }
 
     void Update()
     {
+        if (pc.is_paused)
+        {
+            SelectControl();
+        }
         pos = Mathf.Clamp(pos, 1, 3);
 
-        SelectControl();
     }
 
     private void SelectControl()
     {
-        if (Input.GetAxis("VerticalMenu") == -1f && just_up == false)
+        if (Input.GetAxisRaw("VerticalMenu") == -1f && just_up == false)
         {
             pos++;
             just_down = false;
             just_up = true;
             SelectSwitch();
         }
-        else if (Input.GetAxis("VerticalMenu") == 1f && just_down == false)
+        else if (Input.GetAxisRaw("VerticalMenu") == 1f && just_down == false)
         {
             pos--;
             just_up = false;
             just_down = true;
             SelectSwitch();
         }
-        else if (Input.GetAxis("VerticalMenu") == 0f)
+        else if (Input.GetAxisRaw("VerticalMenu") == 0f)
         {
             just_up = false;
             just_down = false;
@@ -61,13 +67,15 @@ public class PauseMenuController : MonoBehaviour
         switch (pos)
         {
             case 1:
-                //cont
+                pc.is_paused = !pc.is_paused;
                 break;
             case 2:
-                //restart
+                loader.LoadScene("Main");
+                pc.is_paused = false;
                 break;
             case 3:
                 loader.LoadScene("Menu");
+                pc.is_paused = false;
                 break;
         }
     }
