@@ -6,16 +6,16 @@ using TMPro;
 
 public class MenuController : MonoBehaviour
 {
-    private GameObject selector;
+    private RectTransform selector;
     [SerializeField]private int pos = 0;
     private Vector3[] select_pos =
     {
-        new Vector3(-1.38f, -0.32f, 0f),
-        new Vector3(-2.64f, -1.345f, 0f),
-        new Vector3(-1.875f, -2.33f, 0f),
-        new Vector3(-1.134f, -3.332f, 0f),
+        new Vector3(-168f, -41f, 0f),
+        new Vector3(-297f, -165f, 0f),
+        new Vector3(-205f, -289f, 0f),
+        new Vector3(-130f, -414f, 0f),
     };
-    private TextMeshPro[] text_select;
+    private TextMeshProUGUI[] text_select;
     private Color cor_text = new Color(1f, 0.9215686f, 0.3411765f);
     private Color cor_text_normal = new Color(1f, 1f, 1f);  
     private LoaderScript loader;
@@ -23,11 +23,11 @@ public class MenuController : MonoBehaviour
     [SerializeField] private bool just_down;
     void Start()
     {
-        selector = GameObject.Find("SelectorParent");
-        text_select = GameObject.Find("Select").GetComponentsInChildren<TextMeshPro>();
+        selector = GameObject.Find("Canvas/SelectorP").GetComponent<RectTransform>();
+        text_select = GameObject.Find("Canvas/Texts/SelectOpts").GetComponentsInChildren<TextMeshProUGUI>();
         loader = GameObject.Find("Loader").GetComponent<LoaderScript>();
 
-        selector.transform.position = select_pos[pos];
+        selector.anchoredPosition = select_pos[pos];
         text_select[pos].color = cor_text;
     }
 
@@ -90,22 +90,22 @@ public class MenuController : MonoBehaviour
         switch (pos)
         {
             case 0:
-                selector.transform.position = select_pos[pos];
+                selector.anchoredPosition = select_pos[pos];
                 TurnAllNormal();
                 text_select[pos].color = cor_text;
                 break;
             case 1:
-                selector.transform.position = select_pos[pos];
+                selector.anchoredPosition = select_pos[pos];
                 TurnAllNormal();
                 text_select[pos].color = cor_text;
                 break;
             case 2:
-                selector.transform.position = select_pos[pos];
+                selector.anchoredPosition = select_pos[pos];
                 TurnAllNormal();
                 text_select[pos].color = cor_text;
                 break;
             case 3:
-                selector.transform.position = select_pos[pos];
+                selector.anchoredPosition = select_pos[pos];
                 TurnAllNormal();
                 text_select[pos].color = cor_text;
                 break;
