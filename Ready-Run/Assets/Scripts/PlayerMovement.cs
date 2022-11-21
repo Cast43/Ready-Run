@@ -479,16 +479,25 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator Stun()
     {
         stunned = true;
-        anim.SetBool("Stun",true);
+        anim.SetBool("Stun", true);
         sprite.color = Color.red;
         yield return new WaitForSeconds(timeStun);
         stunned = false;
-        anim.SetBool("Stun",false);
+        anim.SetBool("Stun", false);
         sprite.color = Color.white;
 
-
-
-
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Drone" && is_dashing)
+        {
+            collision.gameObject.GetComponent<CircleCollider2D>().enabled = false;
+            collision.gameObject.GetComponent<Animator>().SetBool("Death",true);
+            is_dashing = false;
+            Debug.Log("explode"); 
+            rb.velocity = new Vector2(rb.velocity.x+2,rb.velocity.y+7);
+            Destroy(collision.gameObject,5);
+        }
     }
 }
 

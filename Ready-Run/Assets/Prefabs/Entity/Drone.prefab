@@ -129,7 +129,7 @@ MonoBehaviour:
   vel: 3
   original_pos: 0
   going_right: 0
-  shot_cooldown: 2.5
+  shot_cooldown: 3
 --- !u!50 &3645243318237956809
 Rigidbody2D:
   serializedVersion: 4
@@ -150,7 +150,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &3645243318237956811
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -190,9 +190,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.04, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.3
 --- !u!1 &7185486849589231815
 GameObject:
   m_ObjectHideFlags: 0

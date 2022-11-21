@@ -95,7 +95,7 @@ public class DroneController : MonoBehaviour
     void HuntMove()
     {
         rb.velocity = (new Vector2(0f, 0f));
-        transform.position = new Vector3(Mathf.Lerp(transform.position.x, player.transform.position.x, 1f*Time.deltaTime), Mathf.Lerp(transform.position.y, player.transform.position.y + 1f, 1.2f*Time.deltaTime), transform.position.z);
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, player.transform.position.x, 1f * Time.deltaTime), Mathf.Lerp(transform.position.y, player.transform.position.y + 1f, 1.2f * Time.deltaTime), transform.position.z);
         Shoot();
     }
 
@@ -104,7 +104,7 @@ public class DroneController : MonoBehaviour
         shot_cooldown -= Time.deltaTime;
 
         // ROTACAO NO TIRO
-        Vector3 distance = transform.position - player.transform.position;
+        Vector3 distance = player.transform.position - transform.position;
         float angle = Mathf.Atan2(distance.y, distance.x) * Mathf.Rad2Deg - 180;
         Quaternion ToRotate = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, ToRotate, 1.2f * Time.deltaTime);
