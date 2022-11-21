@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dash_cooldown = 1f;
     [SerializeField] private bool can_dash = true;
     [SerializeField] private bool is_dashing;
+    [SerializeField] private bool reset_dash;
 
     [Header("Slide")]
     [SerializeField] private bool is_sliding;
@@ -192,6 +193,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetButtonDown("Dash") && can_dash && Mathf.Abs(horiz_move) > 0f && !is_on_slope && !is_sliding)
         {
+            anim.Rebind();
             StartCoroutine(Dash());
         }
     }
@@ -344,6 +346,13 @@ public class PlayerMovement : MonoBehaviour
 
         is_dashing = false;
 
+        if (reset_dash)
+        {
+            can_dash = true;
+            reset_dash = false;
+            yield return null;
+        }
+
         yield return new WaitForSeconds(dash_cooldown);
         can_dash = true;
     }
@@ -436,7 +445,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (is_sliding && !is_on_slope && IsGrounded())
         {
-             StartCoroutine(LinDragSlide());
+            StartCoroutine(LinDragSlide());
         }
         else if (is_sliding && !IsGrounded())
         {
@@ -492,11 +501,11 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == "Drone" && is_dashing)
         {
             collision.gameObject.GetComponent<CircleCollider2D>().enabled = false;
-            collision.gameObject.GetComponent<Animator>().SetBool("Death",true);
-            is_dashing = false;
-            Debug.Log("explode"); 
-            rb.velocity = new Vector2(rb.velocity.x+2,rb.velocity.y+7);
-            Destroy(collision.gameObject,5);
+            collision.gameObject.GetComponent<Animator>().SetBool("Death", true);
+            reset_dash = true;
+            Debug.Log("explode");
+            rb.velocity = new Vector2(rb.velocity.x + 2, rb.velocity.y + 7);
+            Destroy(collision.gameObject, 5);
         }
     }
 }

@@ -10,6 +10,8 @@ public class DroneController : MonoBehaviour
     [SerializeField] private Transform shot_spawn;
     [SerializeField] private GameObject shot;
     [SerializeField] private float vel = 2f;
+    [SerializeField] private float huntVelX = 1f;
+    [SerializeField] private float huntVelY = 1.2f;
     [SerializeField] private float original_pos;
     [SerializeField] private bool going_right = true;
     [SerializeField] private float shot_cooldown = 3f;
@@ -95,7 +97,7 @@ public class DroneController : MonoBehaviour
     void HuntMove()
     {
         rb.velocity = (new Vector2(0f, 0f));
-        transform.position = new Vector3(Mathf.Lerp(transform.position.x, player.transform.position.x, 1f * Time.deltaTime), Mathf.Lerp(transform.position.y, player.transform.position.y + 1f, 1.2f * Time.deltaTime), transform.position.z);
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, player.transform.position.x, huntVelX * Time.deltaTime), Mathf.Lerp(transform.position.y, player.transform.position.y + 1f, huntVelY * Time.deltaTime), transform.position.z);
         Shoot();
     }
 
