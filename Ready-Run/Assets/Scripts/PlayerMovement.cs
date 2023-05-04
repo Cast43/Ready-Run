@@ -183,6 +183,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonUp("Slide"))
         {
+
             is_sliding = false;
             holding_ctrl = false;
             linear_drag_slide = old_lin_drag_slide;
@@ -266,6 +267,14 @@ public class PlayerMovement : MonoBehaviour
         {
             jump_ground = true;
             anim.SetBool("NotGrounded", true);
+        }
+        if(is_sliding)
+        {
+            
+        }
+        else
+        {
+
         }
 
     }
